@@ -30,6 +30,7 @@ def randomize():
 
             repl = [(' ', '%20'),
                     (',', '%2C'),
+                    ('&#092;', '/'),
                     ('&#34;', '"'),
                     ('&amp;', '%26'),
                     (';', '%3B'),
@@ -75,13 +76,12 @@ def randomize():
             break
 
 def search():
-    print('Search the database!\n'
-          '[1] Artist/s Name\n'
-          '[2] Album Name\n'
-          '[3] Year Released\n'
-          '[4] Return')
-
     while True:
+        print('\nSearch the database!\n'
+              '[1] Artist/s Name\n'
+              '[2] Album Name\n'
+              '[3] Year Released\n'
+              '[4] Return')
         try:
             search_choice = int(input('What would you like to look for? '))
             if search_choice not in (1, 2, 3, 4):
@@ -90,8 +90,47 @@ def search():
         except:
             print('Please enter an integer.\n')
         else:
+            for line in csv_reader:
+                albums.append(line[5])
+                years.append(line[6])
+                if line[1] != '':
+                    artists.append(line[1] + ' ' + line[2])
+                else:
+                    artists.append(line[2])
+            artists.pop(0)
+            albums.pop(0)
+            years.pop(0)
+
+            repl = [('&#34;', '"'),
+                    ('&#092;', '/'),
+                    ('&amp;', '&')]
+            c1 = 0
+            c2 = 0
+            c3 = 0
+            for i in artists:
+                for x, y in repl:
+                    artists[c1] = artists[c1].replace(x, y)
+                c1 += 1
+            for j in albums:
+                for x, y in repl:
+                    albums[c2] = albums[c2].replace(x, y)
+                c2 += 1
+            for k in albums:
+                for x, y in repl:
+                    albums[c3] = albums[c3].replace(x, y)
+                c3 += 1
+
             if search_choice == 1:
-                search_art = input('Enter the Artist Name: ')
+                search_art = input('\nEnter the Artist Name: ')
+                id = 0
+                for line in artists:
+                    if line == search_art:
+                        indexes.append(id)
+                    id += 1
+                print('\nDisplaying all results for "', search_art + '":\n--------------------------------------')
+                for index in indexes:
+                    print(artists[index] + ' - ' + albums[index] + ' (' + years[index] + ')')
+
             elif search_choice == 2:
                 search_art = input('Enter the Artist Name: ')
             elif search_choice == 3:
@@ -101,7 +140,7 @@ def search():
             break
 
 def menu():
-    print('Menu\n'
+    print('\nMenu\n'
           '[1] Randomize your Wishlist\n'
           '[2] Search the Database\n'
           '[3] See your RYM Stats\n'
@@ -124,6 +163,7 @@ def menu():
                 print('hehe')
             elif menu_choice == 4:
                 print('bye')
+            break
 
 # Data Structures for the Randomizer Function
 wishlist = []
@@ -134,12 +174,40 @@ alt_links = []
 f_printthis = []
 
 # Data Structures for the Search Function
+artists = []
+albums = []
+years = []
+indexes = []
 
 with open('index.csv', 'r', encoding='UTF8') as index_csv:
     csv_reader = csv.reader(index_csv)
 
     print('welcome to mi programme!')
-    randomize()
+    while True:
+        menu()
+        while True:
+            try:
+                print('\nWhere would you like to go?\n'
+                      '[1] Menu\n'
+                      '[2] Exit the program\n')
+                returnq = int(input('I would like to: '))
+                if returnq in (1, 2):
+                    if returnq == 1:
+                        menu()
+                    elif returnq == 2:
+                        print('Thanks for using this program!')
+                        break
+                    else:
+                        print('Please enter only either 1 or 2!')
+                        continue
+            except:
+                print('Please only enter integers! Either 1 or 2 will do :)')
+                continue
+            break
+        break
+
+
+
 
 
 print('wish:', len(wishlist), '\n'

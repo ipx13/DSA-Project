@@ -22,3 +22,19 @@ while True:
         elif menu_choice == 4:
             print('bye')
         break
+
+repl = [(' ', '%20'),
+        (',', '%2C'),
+        ('&#34;', '"'),
+        ('&#092;', '/'),
+        ('&amp;', '%26'),
+        (';', '%3B'),
+        (':', '%3A'),
+        ('/', '%2F'),
+        ('+', '%2B'),
+        ("'", "%27")]
+counter = 0
+    for altx in alt_links:
+        for x, y in repl:
+            alt_links[counter] = alt_links[counter].replace(x, y)
+        counter += 1
