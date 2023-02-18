@@ -1,40 +1,21 @@
-print('Menu\n'
-          '[1] Randomize your Wishlist\n'
-          '[2] Search the Database\n'
-          '[3] See your RYM Stats\n'
-          '[4] Exit')
-
 while True:
-    try:
-        menu_choice = int(input('What would you like to look for? '))
-        if menu_choice not in (1, 2, 3, 4):
-            print('Please enter an integer between 1-4!\n')
+    print("hey there")
+
+    n = 1
+    for n in range(0, n):
+        print('\nWhere would you like to go?\n'
+              '[1] Menu\n'
+              '[2] Exit the program\n')
+        returnq = input('I would like to: ')
+        if returnq == '1':
+            n -= 1
             continue
-    except:
-        print('Please enter an integer.\n')
-    else:
-        if menu_choice == 1:
-            print('kek')
-        elif menu_choice == 2:
-            print('number2')
-        elif menu_choice == 3:
-            print('hehe')
-        elif menu_choice == 4:
-            print('bye')
+        elif returnq == '2':
+            print('Thanks for using this program!')
+            n -= 1
+            break
+        else:
+            print('man whatcha doin')
+        print(n)
         break
 
-repl = [(' ', '%20'),
-        (',', '%2C'),
-        ('&#34;', '"'),
-        ('&#092;', '/'),
-        ('&amp;', '%26'),
-        (';', '%3B'),
-        (':', '%3A'),
-        ('/', '%2F'),
-        ('+', '%2B'),
-        ("'", "%27")]
-counter = 0
-    for altx in alt_links:
-        for x, y in repl:
-            alt_links[counter] = alt_links[counter].replace(x, y)
-        counter += 1
